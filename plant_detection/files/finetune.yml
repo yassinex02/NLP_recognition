@@ -1,0 +1,66 @@
+# train and val dataset paths
+train: ../datasets/train_data/train/images
+val: ../datasets/train_data/val/images
+
+# number of classes
+nc: 30
+
+# class names
+names: ['Apple Scab Leaf', 'Apple leaf', 'Apple rust leaf', 'Bell_pepper leaf spot', 'Bell_pepper leaf', 'Blueberry leaf', 'Cherry leaf', 'Corn Gray leaf spot', 'Corn leaf blight', 'Corn rust leaf', 'Peach leaf', 'Potato leaf early blight', 'Potato leaf late blight', 'Potato leaf', 'Raspberry leaf', 'Soyabean leaf', 'Soybean leaf', 'Squash Powdery mildew leaf', 'Strawberry leaf', 'Tomato Early blight leaf', 'Tomato Septoria leaf spot', 'Tomato leaf bacterial spot', 'Tomato leaf late blight', 'Tomato leaf mosaic virus', 'Tomato leaf yellow virus', 'Tomato leaf', 'Tomato mold leaf', 'Tomato two spotted spider mites leaf', 'grape leaf black rot', 'grape leaf']
+
+# YOLOv5 model architecture
+model:
+
+  name: yolov5s
+
+# optimizer
+optimizer:
+  name: SGD
+  lr: 0.001
+  momentum: 0.937
+  weight_decay: 0.0005
+
+# learning rate scheduler
+lr_scheduler:
+  name: cosine
+  warmup_epochs: 2
+  warmup_lr: 0.0001
+  epochs: 50
+  final_lr: 0
+
+weight_decay: 0.0005
+
+# set other hyperparameters as needed
+lr0: 0.001
+momentum: 0.937
+
+# augmentation
+augmentations:
+  # use default YOLOv5 augmentations
+  train: mosaic, mixup, yolov5_perspective, yolov5_sharpness, yolov5_affine, hsv, photo, random_shape, random_size, random_crop, random_pad
+  # disable augmentations for validation
+  val: []
+
+# training configuration
+train_config:
+  batch_size: 5
+  num_workers: 4
+  img_size: 640
+  epochs: 20
+  accumulate: 1
+  save_period: 5
+
+# evaluation configuration
+eval_config:
+  batch_size: 8
+  num_workers: 4
+  img_size: 640
+
+# checkpoints and logging
+logging:
+  # save checkpoints in 'runs/train/exp7' directory
+  save_dir: /content/yolov5/runs/finetune
+  # save best checkpoint based on mAP value
+  save_best: true
+  # log training metrics every 10 steps
+  log_interval: 10
